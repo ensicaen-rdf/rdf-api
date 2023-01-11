@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { Person } from './person.model';
 
@@ -10,6 +10,7 @@ export class PersonStats {
   @Column('uuid')
   public idPerson: string;
   @ManyToOne(() => Person, (person) => person.idPerson)
+  @JoinColumn({ name: "idPerson"})
   public person: Person;
 
   @Column()

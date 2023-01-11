@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { PersonCsse } from './person-csse.model';
 import { PersonStats } from './person-stats.model';
@@ -12,6 +12,7 @@ export class Person {
   @Column('uuid', { nullable: true })
   public idUser: string | null;
   @OneToOne(() => User, (user) => user.idUser)
+  @JoinColumn({ name: "idUser"})
   public user: User;
 
   @OneToMany(() => PersonCsse, (personCsse) => personCsse.person)

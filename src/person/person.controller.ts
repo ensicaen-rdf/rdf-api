@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PersonService } from './person.service';
 
@@ -21,5 +21,10 @@ export class PersonController {
   @Post("merge")
   public async mergeWithUser(@Body() MergeUserDto: MergeUserDto) {
     return await this._personRepository.mergeUser(MergeUserDto.idPerson, MergeUserDto.idUser);
+  }
+
+  @Get("all")
+  public async getAll(): Promise<PersonDto[]> {
+    return await this._personRepository.getAll();
   }
 }

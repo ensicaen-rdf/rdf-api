@@ -1,4 +1,4 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { Person } from './person.model';
 
@@ -10,6 +10,7 @@ export class User {
   @Column('uuid', { nullable: true })
   public idPerson?: string | null;
   @OneToOne(() => Person, (person) => person.idPerson)
+  @JoinColumn({ name: "idPerson"})
   public person?: Person;
 
   @Column()

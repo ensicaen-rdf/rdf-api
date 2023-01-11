@@ -28,7 +28,7 @@ services:
     restart: on-failure
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@pg.local
-      PGADMIN_DEFAULT_PASSWORD: password
+      PGADMIN_DEFAULT_PASSWORD: NjV3LMG%AjW&
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     networks:
