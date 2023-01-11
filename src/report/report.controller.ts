@@ -5,6 +5,7 @@ import { CreateReportDto } from './dto/create-report.dto';
 import { ValidateReportDto } from './dto/validate-report.dto';
 import { ReportDto } from './dto/report.dto';
 import { ReportService } from './report.service';
+import { Request } from 'express';
 
 @Controller('report')
 @ApiTags("report")
@@ -28,7 +29,7 @@ export class ReportController {
 
   @Post()
   public async create(@Body() CreateReportDto: CreateReportDto, @Req() request: Request): Promise<ReportDto> {
-    const report = await this._reportRepository.create(request.user.id, CreateReportDto.idPersonTarget, CreateReportDto.reason);
+    const report = await this._reportRepository.create(request.user.idUser, CreateReportDto.idPersonTarget, CreateReportDto.reason);
     return new ReportDto(report);
   }
 
