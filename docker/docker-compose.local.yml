@@ -1,0 +1,37 @@
+version: '3.7'
+
+volumes:
+  db-data:
+  pgadmin-data:
+
+networks:
+  internal:
+
+services:
+  db:
+    image: postgres:15-alpine
+    restart: on-failure
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      - internal
+    environment:
+      POSTGRES_USER: rdf-csse
+      POSTGRES_PASSWORD: rdf-csse
+      POSTGRES_DB: rdf-csse
+    ports:
+      - '4060:5432'
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: on-failure
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@pg.local
+      PGADMIN_DEFAULT_PASSWORD: password
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    networks:
+      - internal
+    ports:
+      - '4061:80'
