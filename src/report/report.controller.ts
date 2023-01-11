@@ -1,21 +1,22 @@
-import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { CreateReportDto } from './dto/create-report.dto';
 import { ValidateReportDto } from './dto/validate-report.dto';
 import { ReportDto } from './dto/report.dto';
 import { ReportService } from './report.service';
 import { Request } from 'express';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('report')
 @ApiTags("report")
 export class ReportController {
   constructor(private readonly _reportRepository: ReportService){}
 
-  // @Get()
-  // public async findAll() {
-  //   return await this._reportRepository.getAll();
-  // }
+  @Get("all")
+  public async findAll() {
+    return await this._reportRepository.getAll();
+  }
 
   @Get(':from')
   public async findReportFrom(@Param('from') id: string): Promise<ReportDto[]> {
@@ -28,6 +29,8 @@ export class ReportController {
   }
 
   @Post()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   public async create(@Body() CreateReportDto: CreateReportDto, @Req() request: Request): Promise<ReportDto> {
     const report = await this._reportRepository.create(request.user.idUser, CreateReportDto.idPersonTarget, CreateReportDto.reason);
     return new ReportDto(report);
@@ -38,9 +41,9 @@ export class ReportController {
     return await this._reportRepository.getReportUntreated();
   }
 
-  // @Post()
-  // public async validateReport(@Body() ValidateReportDto: ValidateReportDto): Promise<ReportDto> {
-    
-  // }
+  @Post("validate")
+  public async validateReport(@Body() ValidateReportDto: ValidateReportDto){
+    return await this._reportRepository.validate(ValidateReportDto.idReport, ValidateReportDto.isValid, ValidateReportDto.nbPoints);
+  }
 
 }

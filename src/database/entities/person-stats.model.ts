@@ -11,4 +11,10 @@ export class PersonStats {
   public idPerson: string;
   @ManyToOne(() => Person, (person) => person.idPerson)
   public person: Person;
+
+  @Column()
+  public label: string;
+
+  @Column()
+  public amount: number;
 }

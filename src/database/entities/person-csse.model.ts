@@ -11,6 +11,7 @@ export class PersonCsse {
   public idPerson: string;
   @ManyToOne(() => Person, (person) => person.idPerson)
   public person: Person;
+  
   @Column()
   public amount: number;
 }

@@ -8,6 +8,7 @@ import { ReportModule } from './report/report.module';
 import { configSchema } from './lib/config-schema';
 import { MeModule } from './me/me.module';
 import { UsersModule } from './users/users.module';
+import { PersonModule } from './person/person.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     AuthModule,
     MeModule,
+    PersonModule,
   ],
   controllers: [AppController],
   providers: [],

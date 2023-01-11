@@ -20,6 +20,7 @@ export class ReportService {
     rep.idPersonTarget = to;
     rep.reason = reason;
     rep.isValid = false;
+    rep.isTreated = false;
     rep.nbPoints = 0;
     return this._reportRepository.save(rep);
   }
@@ -30,13 +31,17 @@ export class ReportService {
     rep.nbPoints = nbPoints;
 
     if (isValid) {
-      const idCSSE = await this._csseRepository.findOneBy({ idPerson: rep.idPersonTarget });
-      const transaction = new PersonCsse();
+      const person = await this._personRepository.findOneBy({ idPerson: rep.idPersonTarget });
 
+      const transaction = new PersonCsse();
+      transaction.idPerson = person.idPerson;
       transaction.amount -= rep.nbPoints;
+
+      this._csseRepository.save(transaction);
     }
 
     rep.isTreated = true;
+    this._reportRepository.save(rep)
   }
 
   public async findReportFrom(id: string): Promise<Report[]> {

@@ -19,4 +19,16 @@ export class Person {
 
   @OneToMany(() => PersonStats, (personStats) => personStats.person)
   public personStats: PersonStats[];
+  
+  @Column()
+  public birthPlace: string;
+  
+  @Column()
+  public birthDate: Date;
+  
+  @Column()
+  public familyName: string;
+  
+  @Column()
+  public name: string;
 }
