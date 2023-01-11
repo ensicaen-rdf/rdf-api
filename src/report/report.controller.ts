@@ -1,9 +1,12 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 
 import { CreateReportDto } from './dto/create-report.dto';
+import { ReportService } from './report.service';
 
 @Controller('report')
 export class ReportController {
+  constructor(private readonly _reportRepository: ReportService){}
+
   @Get()
   findAll(): string {
     return 'This action returns all reports';
@@ -25,6 +28,8 @@ export class ReportController {
 
   @Post()
   async create(@Body() CreateReportDto: CreateReportDto) {
-    return 'This action create a new report !';
+    this._reportRepository.create(CreateReportDto.idPersonFrom, CreateReportDto.idPersonTarget, CreateReportDto.reason);
+    return 
   }
+
 }
