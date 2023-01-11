@@ -6,10 +6,10 @@ export class Report {
   public idReport: string;
 
   @Column()
-  public idPersonFrom: number;
+  public idPersonFrom: string;
 
   @Column()
-  public idPersonTarget: number;
+  public idPersonTarget: string;
 
   @Column()
   public reason: string;
@@ -18,5 +18,9 @@ export class Report {
   public isValid: boolean;
 
   @Column()
+  public isTreated: boolean;
+  
+  @Column()
   public nbPoints: number;
+  
 }

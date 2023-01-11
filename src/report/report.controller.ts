@@ -1,35 +1,34 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 import { CreateReportDto } from './dto/create-report.dto';
+import { ReportDto } from './dto/report.dto';
 import { ReportService } from './report.service';
 
 @Controller('report')
+@ApiTags("report")
 export class ReportController {
   constructor(private readonly _reportRepository: ReportService){}
 
   @Get()
-  findAll(): string {
-    return 'This action returns all reports';
+  public async findAll() {
+    return await this._reportRepository.getAll();
   }
 
   @Get(':from')
-  findOneFrom(@Param('from') id: string): string {
-    //make request
-    //return result
-    return 'This action returns all reports emitted from #${id}';
+  public async findReportFrom(@Param('from') id: string): Promise<ReportDto[]> {
+    return await this._reportRepository.findReportFrom(id);
   }
 
-  @Get(':to')
-  findOneTo(@Param('to') id: string): string {
-    //make request
-    //return result
-    return 'This action returns all reports concerning #${id}';
+  @Get(':for')
+  public async findReporFor(@Param('for') id: string): Promise<ReportDto[]> {
+    return await this._reportRepository.findReportConcerning(id);
   }
 
   @Post()
-  async create(@Body() CreateReportDto: CreateReportDto) {
-    this._reportRepository.create(CreateReportDto.idPersonFrom, CreateReportDto.idPersonTarget, CreateReportDto.reason);
-    return 
+  public async create(@Body() CreateReportDto: CreateReportDto, @Req() request: Request): Promise<ReportDto> {
+    const report = await this._reportRepository.create(request.user.id, CreateReportDto.idPersonTarget, CreateReportDto.reason);
+    return new ReportDto(report);
   }
 
 }

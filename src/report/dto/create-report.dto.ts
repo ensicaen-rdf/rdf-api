@@ -1,8 +1,9 @@
+import { ApiProperty } from "@nestjs/swagger";
+
 export class CreateReportDto {
-  idReport: number;
-  idPersonFrom: number;
-  idPersonTarget: number;
+  @ApiProperty()
+  idPersonTarget: string;
+  
+  @ApiProperty()
   reason: string;
-  isValid?: boolean = false;
-  nbPoints: number;
 }
