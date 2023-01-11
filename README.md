@@ -9,18 +9,22 @@ npm run start:dev
 
 ## Routes
 
-- POST /auth
+- POST /auth (art)
 
-- GET /me
+- GET /me 
 - POST /me/stats (number of steps)
 
 - POST /camera/:idCamera/detect (person)
 - POST /camera/:idCamera
 
-- GET /report
-- POST /report (person, reason)
-
-- GET /stats
-- GET /stats/:idPerson
+- GET /report (ism)
+- POST /report (person, reason) (ism)
 
 - POST /person (name, infos, images)
+
+## Sockets
+
+- /me/stats (number of steps)
+
+- /stats/:idPerson
+- /stats

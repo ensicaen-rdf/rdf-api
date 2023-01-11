@@ -1,0 +1,9 @@
+
+export class CreateReportDto {
+  idReport: int;
+  idPersonFrom: int;
+  idPersonTarget: int;
+  reason: string;
+  isValid?: boolean = false;
+  nbPoints: int;
+}
