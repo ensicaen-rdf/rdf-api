@@ -3,11 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Report } from 'src/database/entities/report.model';
 import { PersonCsse } from 'src/database/entities/person-csse.model';
+import { Person } from 'src/database/entities/person.model';
+import { ReportDto } from './dto/report.dto';
 
 @Injectable()
 export class ReportService {
   constructor(
     @InjectRepository(Report) private readonly _reportRepository: Repository<Report>,
+    @InjectRepository(Person) private readonly _personRepository: Repository<Person>,
     @InjectRepository(PersonCsse) private readonly _csseRepository: Repository<PersonCsse>,
   ) {}
 
@@ -27,8 +30,10 @@ export class ReportService {
     rep.nbPoints = nbPoints;
 
     if (isValid) {
-      const person = await this._csseRepository.findOneBy({ idPerson: rep.idPersonTarget });
-      person.solde -= rep.nbPoints;
+      const idCSSE = await this._csseRepository.findOneBy({ idPerson: rep.idPersonTarget });
+      const transaction = new PersonCsse();
+
+      transaction.amount -= rep.nbPoints;
     }
 
     rep.isTreated = true;
@@ -50,6 +55,13 @@ export class ReportService {
 
   public async getAll(): Promise<Report[]> {
     const rep = await this._reportRepository.find();
+    return rep;
+  }
+
+  public async getReportUntreated(): Promise<ReportDto[]> {
+    const rep = await this._reportRepository.findBy({
+      isTreated: false
+    })
     return rep;
   }
 }

@@ -12,5 +12,5 @@ export class PersonCsse {
   @ManyToOne(() => Person, (person) => person.idPerson)
   public person: Person;
   @Column()
-  public solde: number;
+  public amount: number;
 }
