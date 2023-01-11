@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { DatabaseModule } from './database/database.module';
 import { ReportModule } from './report/report.module';
 import { configSchema } from './lib/config-schema';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { configSchema } from './lib/config-schema';
     }),
     DatabaseModule,
     ReportModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [],

@@ -11,4 +11,10 @@ export class User {
   public idPerson?: string | null;
   @OneToOne(() => Person, (person) => person.idPerson)
   public person?: Person;
+
+  @Column()
+  public username: string;
+
+  @Column()
+  public password: string;
 }
