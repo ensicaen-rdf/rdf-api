@@ -14,16 +14,65 @@ export class Person {
 
   @OneToMany(() => PersonStats, (personStats) => personStats.person)
   public personStats: PersonStats[];
-  
+
+
   @Column()
-  public birthPlace: string;
-  
+  public lastName: string;
+
   @Column()
-  public birthDate: Date;
-  
+  public firstNames: string;
+
   @Column()
-  public familyName: string;
-  
+  public dateOfBirth: Date;
+
   @Column()
-  public name: string;
-}
+  public placeOfBirth: string;
+
+  @Column()
+  public nationalId: string;
+
+  @Column()
+  public address: string;
+
+  @Column()
+  public city: string;
+
+  @Column()
+  public country: string;
+
+  @Column()
+  public eyesColour: string;
+
+  @Column()
+  public height: number; //cm
+
+  @Column()
+  public weight: number; //kg
+
+  @Column()
+  public photo: string;
+
+  @Column()
+  public iris: string;
+
+  @Column()
+  public fingerprints: string;
+
+  @Column()
+  public socialSecurityNumber: string;
+
+  @Column()
+  public pathologies: string;
+
+  @Column()
+  public bloodType: string;
+
+  @Column()
+  public bloodRhesus: string;
+
+  @Column()
+  public placeOfWork: string;
+
+  @Column()
+  public companyName: string;
+} 

@@ -1,18 +1,66 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreatePersonDto {
-  @ApiProperty({required: false})
+  @ApiPropertyOptional()
   idUser: string;
 
   @ApiProperty()
-  name: string;
+  public lastName: string;
 
   @ApiProperty()
-  familyName: string;
+  public firstNames: string;
 
   @ApiProperty()
-  birthDate: Date;
+  public dateOfBirth: string;
 
   @ApiProperty()
-  birthPlace: string;
+  public placeOfBirth: string;
+
+  @ApiProperty()
+  public nationalId: string;
+
+  @ApiProperty()
+  public address: string;
+
+  @ApiProperty()
+  public city: string;
+
+  @ApiProperty()
+  public country: string;
+
+  @ApiProperty()
+  public eyesColour: string;
+
+  @ApiProperty()
+  public height: number; //cm
+
+  @ApiProperty()
+  public weight: number; //kg
+
+  @ApiProperty()
+  public photo: string;
+
+  @ApiProperty()
+  public iris: string;
+
+  @ApiProperty()
+  public fingerprints: string;
+
+  @ApiProperty()
+  public socialSecurityNumber: string;
+
+  @ApiProperty()
+  public pathologies: string;
+
+  @ApiProperty()
+  public bloodType: string;
+
+  @ApiProperty()
+  public bloodRhesus: string;
+
+  @ApiProperty()
+  public placeOfWork: string;
+
+  @ApiProperty()
+  public companyName: string;
 }
