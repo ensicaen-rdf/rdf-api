@@ -34,6 +34,8 @@ Deploy:
   stage: deploy
   tags:
     - deploy
+  services:
+    - docker:20.10.16-dind
   variables:
     STACK: rdf
   script:
