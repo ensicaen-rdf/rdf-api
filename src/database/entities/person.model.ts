@@ -15,25 +15,17 @@ export class Person {
   @OneToMany(() => PersonStats, (personStats) => personStats.person)
   public personStats: PersonStats[];
 
+  @OneToMany(() => PersonLocalisation, (personLocalisation) => personLocalisation.person)
+  public personLocalisations: PersonLocalisation[];
+
   @Column()
   public lastName: string;
 
   @Column()
   public firstNames: string;
 
-  @Column()
+  @Column('date')
   public dateOfBirth: Date;
-  @OneToMany(() => PersonLocalisation, (personLocalisation) => personLocalisation.person)
-  public personLocalisations: PersonLocalisation[];
-
-  @Column()
-  public birthPlace: string;
-
-  @Column()
-  public birthDate: Date;
-
-  @Column()
-  public familyName: string;
 
   @Column()
   public placeOfBirth: string;

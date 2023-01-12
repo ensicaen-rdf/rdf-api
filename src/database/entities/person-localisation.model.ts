@@ -13,8 +13,8 @@ export class PersonLocalisation {
   @JoinColumn({ name: 'idPerson' })
   public person: Person;
 
-  @Column('datetime')
-  public date: Date;
+  // @Column()
+  // public date: Date;
 
   @Column()
   public latitude: number;

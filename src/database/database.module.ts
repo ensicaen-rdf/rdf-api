@@ -6,6 +6,7 @@ import { ConfigSchema } from '../lib/config-schema';
 import { DatabasePopulateService } from './database-populate.service';
 import { Camera } from './entities/camera.model';
 import { PersonCsse } from './entities/person-csse.model';
+import { PersonLocalisation } from './entities/person-localisation.model';
 import { PersonStats } from './entities/person-stats.model';
 import { Person } from './entities/person.model';
 import { Report } from './entities/report.model';
@@ -23,7 +24,7 @@ import { User } from './entities/user.model';
         password: configService.get('DB_PASS'),
         database: configService.get('DB_NAME'),
         synchronize: true,
-        entities: [Person, User, PersonCsse, PersonStats, Report, Camera],
+        entities: [Person, User, PersonCsse, PersonStats, PersonLocalisation, Report, Camera],
       }),
     }),
   ],

@@ -10,9 +10,9 @@ export class PersonCsse {
   @Column('uuid')
   public idPerson: string;
   @ManyToOne(() => Person, (person) => person.idPerson)
-  @JoinColumn({ name: "idPerson"})
+  @JoinColumn({ name: 'idPerson' })
   public person: Person;
-  
+
   @Column()
   public amount: number;
 }
