@@ -5,18 +5,22 @@ import { Report } from 'src/database/entities/report.model';
 import { PersonCsse } from 'src/database/entities/person-csse.model';
 import { Person } from 'src/database/entities/person.model';
 import { ReportDto } from './dto/report.dto';
+import { User } from 'src/database/entities/user.model';
 
 @Injectable()
 export class ReportService {
   constructor(
+    @InjectRepository(User) private readonly _userRepository: Repository<User>,
     @InjectRepository(Report) private readonly _reportRepository: Repository<Report>,
     @InjectRepository(Person) private readonly _personRepository: Repository<Person>,
     @InjectRepository(PersonCsse) private readonly _csseRepository: Repository<PersonCsse>,
   ) {}
 
-  public async create(from: string, to: string, reason: string) {
+  public async create(fromIdUser: string, to: string, reason: string) {
+    const user = await this._userRepository.findOneBy({idUser: fromIdUser});
+    
     const rep = new Report();
-    rep.idPersonFrom = from;
+    rep.idPersonFrom = user.idUser;
     rep.idPersonTarget = to;
     rep.reason = reason;
     rep.isValid = false;
@@ -35,7 +39,7 @@ export class ReportService {
 
       const transaction = new PersonCsse();
       transaction.idPerson = person.idPerson;
-      transaction.amount -= rep.nbPoints;
+      transaction.amount = -rep.nbPoints;
 
       this._csseRepository.save(transaction);
     }

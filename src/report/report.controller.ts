@@ -38,7 +38,8 @@ export class ReportController {
 
   @Get()
   public async getReportUntreated(): Promise<ReportDto[]> {
-    return await this._reportRepository.getReportUntreated();
+    const reports = await this._reportRepository.getReportUntreated();
+    return reports
   }
 
   @Post("validate")

@@ -66,8 +66,6 @@ export class PersonService {
   public async mergeUser(idPerson: string, idUser: string): Promise<UserDto> {
     const person = await this._personRepository.findOneBy({idPerson: idPerson});
     const user = await this._userRepository.findOneBy({idUser: idUser});
-
-    console.log(user, person);
     
     user.person = person;
     
