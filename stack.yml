@@ -38,7 +38,7 @@ services:
           memory: 512M
 
   api:
-    image: $REGISTRY_URL$REGISTRY_ROOT/api
+    image: $REGISTRY_URL$REGISTRY_ROOT/rdf-api
     environment:
       PORT: 80
 
