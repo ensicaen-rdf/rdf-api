@@ -9,8 +9,8 @@ export class User {
 
   @Column('uuid', { nullable: true })
   public idPerson?: string | null;
-  @OneToOne(() => Person, (person) => person.idPerson)
-  @JoinColumn({ name: "idPerson"})
+  @OneToOne(() => Person, (person) => person.idPerson, { cascade: true })
+  @JoinColumn({ name: 'idPerson' })
   public person?: Person;
 
   @Column()

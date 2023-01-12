@@ -1,20 +1,19 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-
 import { Person } from 'src/database/entities/person.model';
 import { User } from 'src/database/entities/user.model';
 import { UserDto } from 'src/users/dto/user.dto';
 import { Repository } from 'typeorm';
+
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+
 import { PersonDto } from './dto/person.dto';
 
 @Injectable()
 export class PersonService {
-
   constructor(
     @InjectRepository(Person) private readonly _personRepository: Repository<Person>,
     @InjectRepository(User) private readonly _userRepository: Repository<User>,
   ) {}
-
 
   public async create(
     nationalId: string,
@@ -36,8 +35,8 @@ export class PersonService {
     bloodType: string,
     bloodRhesus: string,
     placeOfWork: string,
-    companyName: string
-    ): Promise<Person>{
+    companyName: string,
+  ): Promise<Person> {
     const person = new Person();
     person.nationalId = nationalId;
     person.lastName = lastName;
@@ -64,11 +63,11 @@ export class PersonService {
   }
 
   public async mergeUser(idPerson: string, idUser: string): Promise<UserDto> {
-    const person = await this._personRepository.findOneBy({idPerson: idPerson});
-    const user = await this._userRepository.findOneBy({idUser: idUser});
-    
+    const person = await this._personRepository.findOneBy({ idPerson: idPerson });
+    const user = await this._userRepository.findOneBy({ idUser: idUser });
+
     user.person = person;
-    
+
     return this._userRepository.save(user);
   }
 
@@ -76,5 +75,4 @@ export class PersonService {
     const persons = await this._personRepository.find();
     return persons;
   }
-
 }

@@ -1,16 +1,15 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { PersonService } from './person.service';
 
-import { CreatePersonDto } from './dto/create-person.dto'
-import { PersonDto } from './dto/person.dto'
-import { MergeUserDto } from './dto/merge-user.dto'
+import { CreatePersonDto } from './dto/create-person.dto';
+import { MergeUserDto } from './dto/merge-user.dto';
+import { PersonDto } from './dto/person.dto';
+import { PersonService } from './person.service';
 
 @Controller('people')
 @ApiTags('people')
 export class PersonController {
   constructor(private readonly _personRepository: PersonService) {}
-
 
   @Post()
   public async createPerson(@Body() cpd: CreatePersonDto): Promise<PersonDto> {
@@ -34,15 +33,16 @@ export class PersonController {
       cpd.bloodType,
       cpd.bloodRhesus,
       cpd.placeOfWork,
-      cpd.companyName);
-    
+      cpd.companyName,
+    );
+
     if (cpd.idUser) {
       this._personRepository.mergeUser(person.idPerson, cpd.idUser);
     }
     return new PersonDto(person);
   }
 
-  @Post("merge")
+  @Post('merge')
   public async mergeWithUser(@Body() MergeUserDto: MergeUserDto) {
     return await this._personRepository.mergeUser(MergeUserDto.idPerson, MergeUserDto.idUser);
   }
