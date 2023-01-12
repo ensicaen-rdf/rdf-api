@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { ConfigSchema } from '../lib/config-schema';
+import { DatabasePopulateService } from './database-populate.service';
 import { Camera } from './entities/camera.model';
 import { PersonCsse } from './entities/person-csse.model';
 import { PersonStats } from './entities/person-stats.model';
@@ -27,5 +28,10 @@ import { User } from './entities/user.model';
     }),
   ],
   exports: [TypeOrmModule],
+  providers: [DatabasePopulateService],
 })
-export class DatabaseModule {}
+export class DatabaseModule {
+  constructor(private readonly _databasePopulateService: DatabasePopulateService) {
+    this._databasePopulateService.populate();
+  }
+}

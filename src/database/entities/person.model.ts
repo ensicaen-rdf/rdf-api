@@ -1,8 +1,8 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import { PersonCsse } from './person-csse.model';
+import { PersonLocalisation } from './person-localisation.model';
 import { PersonStats } from './person-stats.model';
-import { User } from './user.model';
 
 @Entity()
 export class Person {
@@ -15,7 +15,6 @@ export class Person {
   @OneToMany(() => PersonStats, (personStats) => personStats.person)
   public personStats: PersonStats[];
 
-
   @Column()
   public lastName: string;
 
@@ -24,6 +23,17 @@ export class Person {
 
   @Column()
   public dateOfBirth: Date;
+  @OneToMany(() => PersonLocalisation, (personLocalisation) => personLocalisation.person)
+  public personLocalisations: PersonLocalisation[];
+
+  @Column()
+  public birthPlace: string;
+
+  @Column()
+  public birthDate: Date;
+
+  @Column()
+  public familyName: string;
 
   @Column()
   public placeOfBirth: string;
@@ -75,4 +85,4 @@ export class Person {
 
   @Column()
   public companyName: string;
-} 
+}
