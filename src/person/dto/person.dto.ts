@@ -46,6 +46,5 @@ export class PersonDto {
     this.bloodRhesus = person.bloodRhesus;
     this.placeOfWork = person.placeOfWork;
     this.companyName = person.companyName;
-
   }
 }

@@ -5,18 +5,18 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { PersonDto } from '../person/dto/person.dto';
-import { MeService } from './me.service';
+import { PersonService } from '../person/person.service';
 
 @Controller('me')
 @ApiTags('me')
 export class MeController {
-  constructor(private readonly _meService: MeService) {}
+  constructor(private readonly _personService: PersonService) {}
 
   @Get()
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   public async getMe(@Req() req: Request): Promise<PersonDto> {
-    const person = await this._meService.getPersonFromUser(req.user.idUser);
+    const person = await this._personService.getPerson(req.user.idPerson);
     return new PersonDto(person);
   }
 }

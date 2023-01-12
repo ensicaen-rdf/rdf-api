@@ -1,0 +1,69 @@
+version: '3.8'
+
+x-service-deploy-default-policy: &service-deploy-default-policy
+  restart_policy:
+    condition: any
+    delay: 20s
+    max_attempts: 5
+
+networks:
+  db-net:
+  public:
+    name: public
+    external: true
+
+volumes:
+  db-data:
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: rdf-csse
+      POSTGRES_PASSWORD: rdf-csse
+      POSTGRES_DB: rdf-csse
+    logging:
+      options:
+        max-size: 10m
+        max-file: '3'
+    networks:
+      - db-net
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    deploy:
+      <<: *service-deploy-default-policy
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  api:
+    image: $REGISTRY_URL$REGISTRY_ROOT/api
+    environment:
+      PORT: 80
+
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: rdf-csse
+      DB_PASS: rdf-csse
+      DB_NAME: rdf-csse
+
+      JWT_PRIVATE_KEY_PATH: ./keys/jwt-RS256.key
+      JWT_PUBLIC_KEY_PATH: ./keys/jwt-RS256.key.pub
+    networks:
+      - db-net
+      - public
+    deploy:
+      <<: *service-deploy-default-policy
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+      labels:
+        traefik.enable: 'true'
+        traefik.http.routers.rdf-api.rule: Host(`intensif06.ensicaen.fr`) && PathPrefix(`/api`)
+        traefik.http.routers.rdf-api.entrypoints: https
+        traefik.http.routers.rdf-api.tls: 'true'
+        traefik.http.routers.rdf-api.tls.certresolver: le
+        traefik.http.routers.rdf-api.service: rdf-api
+        traefik.http.services.rdf-api.loadbalancer.server.port: 80

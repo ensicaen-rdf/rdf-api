@@ -22,7 +22,7 @@ export class AuthService {
   }
 
   public async validateUser(username: string, password: string): Promise<User | null> {
-    const user = await this._userRepository.findOne({ where: { username } });
+    const user = await this._userRepository.findOne({ where: { username }, relations: ['person'] });
 
     if (!user) {
       return null;
@@ -39,6 +39,7 @@ export class AuthService {
   public async createToken(user: User): Promise<string> {
     const payload: Payload = {
       idUser: user.idUser,
+      idPerson: user.person.idPerson,
       username: user.username,
     };
 

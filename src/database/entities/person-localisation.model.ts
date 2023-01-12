@@ -13,15 +13,12 @@ export class PersonLocalisation {
   @JoinColumn({ name: 'idPerson' })
   public person: Person;
 
-  // @Column()
-  // public date: Date;
+  @Column()
+  public date: Date;
 
   @Column()
   public latitude: number;
 
   @Column()
   public longitude: number;
-
-  @Column()
-  public address: string;
 }

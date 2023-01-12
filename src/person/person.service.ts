@@ -6,13 +6,14 @@ import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
-import { PersonDto } from './dto/person.dto';
+import { PersonLocalisation } from '../database/entities/person-localisation.model';
 
 @Injectable()
 export class PersonService {
   constructor(
     @InjectRepository(Person) private readonly _personRepository: Repository<Person>,
     @InjectRepository(User) private readonly _userRepository: Repository<User>,
+    @InjectRepository(PersonLocalisation) private readonly _personLocalisationRepository: Repository<PersonLocalisation>,
   ) {}
 
   public async create(
@@ -71,8 +72,25 @@ export class PersonService {
     return this._userRepository.save(user);
   }
 
-  public async getAll(): Promise<PersonDto[]> {
+  public async getAll(): Promise<Person[]> {
     const persons = await this._personRepository.find();
     return persons;
+  }
+
+  public async getPerson(idPerson: string): Promise<Person> {
+    return await this._personRepository.findOneBy({ idPerson: idPerson });
+  }
+
+  public async setLocalisation(idPerson: string, lat: number, lon: number) {
+    const localisation = new PersonLocalisation();
+    localisation.idPerson = idPerson;
+    localisation.date = new Date();
+    localisation.latitude = lat;
+    localisation.longitude = lon;
+    await this._personLocalisationRepository.save(localisation);
+  }
+
+  public async setNumberOfSteps(idPerson: string) {
+    //
   }
 }

@@ -1,0 +1,41 @@
+stages:
+  - dockerize
+  - deploy
+
+.dockerize: &dockerize
+  stage: dockerize
+  tags:
+    - docker
+  services:
+    - docker:20.10.16-dind
+  script:
+    - mkdir keys
+    - cp $JWT_PRIVATE_KEY keys/jwt-RS256.key
+    - cp $JWT_PUBLIC_KEY keys/jwt-RS256.key.pub
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $REGISTRY_URL
+    - docker build -f $DOCKERFILE -t $DOCKER_IMAGE:$TAG .
+    - docker push $DOCKER_IMAGE:$TAG
+    - docker rmi $DOCKER_IMAGE:$TAG
+  only:
+    - master
+
+Dockerize:
+  <<: *dockerize
+  variables:
+    DOCKER_IMAGE: $REGISTRY_URL$REGISTRY_ROOT/rdf-api
+    DOCKERFILE: Dockerfile
+    TAG: latest
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ''
+
+Deploy:
+  stage: deploy
+  tags:
+    - deploy
+  variables:
+    STACK: rdf
+  script:
+    - docker login -u $REGISTRY_USER -p $REGISTRY_PASSWORD $REGISTRY_URL
+    - docker stack deploy -c stack.yml $STACK --with-registry-auth
+  only:
+    - master
