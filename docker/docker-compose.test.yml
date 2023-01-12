@@ -4,3 +4,5 @@ services:
   api:
     image: rdf-api
     env_file: ../.env
+    ports:
+      - 4051:3000

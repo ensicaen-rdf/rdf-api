@@ -25,5 +25,6 @@ COPY --from=builder --chown=node:node /home/node/node_modules/ ./node_modules/
 COPY --from=builder --chown=node:node /home/node/dist/ ./dist/
 COPY --chown=node:node data ./data
 COPY --chown=node:node keys ./keys
+COPY --chown=node:node uploads ./uploads
 
 CMD ["node", "dist/main.js"]

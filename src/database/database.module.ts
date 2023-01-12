@@ -8,6 +8,7 @@ import { Camera } from './entities/camera.model';
 import { PersonCsse } from './entities/person-csse.model';
 import { PersonLocalisation } from './entities/person-localisation.model';
 import { PersonStats } from './entities/person-stats.model';
+import { PersonSteps } from './entities/person-steps.model';
 import { Person } from './entities/person.model';
 import { Report } from './entities/report.model';
 import { User } from './entities/user.model';
@@ -24,7 +25,7 @@ import { User } from './entities/user.model';
         password: configService.get('DB_PASS'),
         database: configService.get('DB_NAME'),
         synchronize: true,
-        entities: [Person, User, PersonCsse, PersonStats, PersonLocalisation, Report, Camera],
+        entities: [Person, User, PersonCsse, PersonStats, PersonLocalisation, PersonSteps, Report, Camera],
       }),
     }),
   ],

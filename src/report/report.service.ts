@@ -1,11 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Report } from 'src/database/entities/report.model';
 import { PersonCsse } from 'src/database/entities/person-csse.model';
 import { Person } from 'src/database/entities/person.model';
-import { ReportDto } from './dto/report.dto';
+import { Report } from 'src/database/entities/report.model';
 import { User } from 'src/database/entities/user.model';
+import { Repository } from 'typeorm';
+
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+
+import { ReportDto } from './dto/report.dto';
 
 @Injectable()
 export class ReportService {
@@ -17,8 +19,8 @@ export class ReportService {
   ) {}
 
   public async create(fromIdUser: string, to: string, reason: string) {
-    const user = await this._userRepository.findOneBy({idUser: fromIdUser});
-    
+    const user = await this._userRepository.findOneBy({ idUser: fromIdUser });
+
     const rep = new Report();
     rep.idPersonFrom = user.idUser;
     rep.idPersonTarget = to;
@@ -45,7 +47,7 @@ export class ReportService {
     }
 
     rep.isTreated = true;
-    this._reportRepository.save(rep)
+    this._reportRepository.save(rep);
   }
 
   public async findReportFrom(id: string): Promise<Report[]> {
@@ -69,8 +71,8 @@ export class ReportService {
 
   public async getReportUntreated(): Promise<ReportDto[]> {
     const rep = await this._reportRepository.findBy({
-      isTreated: false
-    })
+      isTreated: false,
+    });
     return rep;
   }
 }

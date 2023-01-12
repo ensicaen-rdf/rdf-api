@@ -1,6 +1,7 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
+import { AddStepsDto } from './dto/add-steps.dto';
 import { PersonDto } from './dto/person.dto';
 import { PersonService } from './person.service';
 
@@ -55,5 +56,20 @@ export class PersonController {
   public async getPerson(@Param('idPerson') idPerson: string): Promise<PersonDto> {
     const person = await this._personService.getPerson(idPerson);
     return new PersonDto(person);
+  }
+
+  @Get(':idPerson/steps')
+  public async getPersonSteps(@Param('idPerson') idPerson: string): Promise<number> {
+    return await this._personService.getSteps(idPerson);
+  }
+
+  @Post(':idPerson/steps')
+  public async addPersonSteps(@Param('idPerson') idPerson: string, @Body() steps: AddStepsDto): Promise<void> {
+    await this._personService.addSteps(idPerson, steps.steps);
+  }
+
+  @Get(':idPerson/csse')
+  public async getPersonCSSE(@Param('idPerson') idPerson: string): Promise<number> {
+    return await this._personService.getCsse(idPerson);
   }
 }

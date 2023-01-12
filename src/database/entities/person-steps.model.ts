@@ -2,15 +2,10 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 't
 
 import { Person } from './person.model';
 
-export enum PersonCsseReason {
-  Steps = 'steps',
-  Report = 'report',
-}
-
 @Entity()
-export class PersonCsse {
+export class PersonSteps {
   @PrimaryGeneratedColumn('uuid')
-  public idCsse: string;
+  public idSteps: string;
 
   @Column('uuid')
   public idPerson: string;

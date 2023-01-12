@@ -6,11 +6,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { PersonLocalisation } from '../database/entities/person-localisation.model';
+import { PersonSteps } from '../database/entities/person-steps.model';
 import { PersonController } from './person.controller';
 import { PersonService } from './person.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Person, User, PersonLocalisation, PersonCsse])],
+  imports: [TypeOrmModule.forFeature([Person, User, PersonLocalisation, PersonCsse, PersonSteps])],
   controllers: [PersonController],
   providers: [PersonService],
   exports: [PersonService],
