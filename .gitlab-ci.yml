@@ -8,6 +8,8 @@ stages:
     - docker
   services:
     - docker:20.10.16-dind
+  before_script:
+    - echo $REGISTRY_URL
   script:
     - mkdir keys
     - cp $JWT_PRIVATE_KEY keys/jwt-RS256.key
