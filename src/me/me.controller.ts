@@ -16,12 +16,11 @@ export class MeController {
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   public async getMe(@Req() req: Request) {
-    const idPerson = await this._meRepository.getIdPerson(req.user.idUser)
+    const person = await this._meRepository.getPerson(req.user.idUser)
 
     return {
-      "username": req.user.username,
-      "idPerson": idPerson,
-      "idUser": req.user.idUser
+      "user": req.user,
+      "person": person
     };
   }
 }

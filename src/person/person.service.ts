@@ -26,14 +26,15 @@ export class PersonService {
     return this._personRepository.save(person);
   }
 
-  public async mergeUser(idPerson: string, idUser: string): Promise<PersonDto> {
+  public async mergeUser(idPerson: string, idUser: string): Promise<UserDto> {
     const person = await this._personRepository.findOneBy({idPerson: idPerson});
     const user = await this._userRepository.findOneBy({idUser: idUser});
+
+    console.log(user, person);
     
-    person.user = user;
     user.person = person;
     
-    return this._personRepository.save(person);
+    return this._userRepository.save(user);
   }
 
   public async getAll(): Promise<PersonDto[]> {

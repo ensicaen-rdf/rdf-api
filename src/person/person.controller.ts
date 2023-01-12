@@ -12,7 +12,7 @@ export class PersonController {
   constructor(private readonly _personRepository: PersonService) {}
 
 
-  @Post("create")
+  @Post()
   public async createPerson(@Body() CreatePersonDto: CreatePersonDto): Promise<PersonDto> {
     const person = await this._personRepository.create(CreatePersonDto.name, CreatePersonDto.familyName, CreatePersonDto.birthDate, CreatePersonDto.birthPlace);
     return new PersonDto(person);
@@ -23,7 +23,7 @@ export class PersonController {
     return await this._personRepository.mergeUser(MergeUserDto.idPerson, MergeUserDto.idUser);
   }
 
-  @Get("all")
+  @Get()
   public async getAll(): Promise<PersonDto[]> {
     return await this._personRepository.getAll();
   }

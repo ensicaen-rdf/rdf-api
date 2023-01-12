@@ -9,12 +9,6 @@ export class Person {
   @PrimaryGeneratedColumn('uuid')
   public idPerson: string;
 
-  @Column('uuid', { nullable: true })
-  public idUser: string | null;
-  @OneToOne(() => User, (user) => user.idUser)
-  @JoinColumn({ name: "idUser"})
-  public user: User;
-
   @OneToMany(() => PersonCsse, (personCsse) => personCsse.person)
   public personCsse: PersonCsse[];
 
