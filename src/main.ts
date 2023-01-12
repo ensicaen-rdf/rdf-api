@@ -21,7 +21,7 @@ async function bootstrap() {
     credentials: true,
   });
 
-  app.useStaticAssets(join(__dirname, '..', 'uploads'), { prefix: '/uploads' });
+  app.useStaticAssets(join(__dirname, '..', 'uploads'), { prefix: '/api/uploads' });
 
   const port = process.env.PORT ? parseInt(process.env.PORT) : 3000;
   await app.listen(port);
