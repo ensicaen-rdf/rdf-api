@@ -1,0 +1,6 @@
+version: '3.7'
+
+services:
+  api:
+    image: rdf-api
+    env_file: ../.env
