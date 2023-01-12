@@ -8,8 +8,8 @@ x-service-deploy-default-policy: &service-deploy-default-policy
 
 networks:
   db-net:
-  public:
-    name: public
+  traefik-public:
+    name: traefik-public
     external: true
 
 volumes:
@@ -52,7 +52,7 @@ services:
       JWT_PUBLIC_KEY_PATH: ./keys/jwt-RS256.key.pub
     networks:
       - db-net
-      - public
+      - traefik-public
     deploy:
       <<: *service-deploy-default-policy
       resources:
