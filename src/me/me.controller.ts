@@ -5,7 +5,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AddStepsDto } from '../person/dto/add-steps.dto';
-import { PersonLocalisationDto } from '../person/dto/person-localisation.dto';
+import { PersonLocalisationDto, SetPersonLocalisationDto } from '../person/dto/person-localisation.dto';
 import { PersonDto } from '../person/dto/person.dto';
 import { PersonService } from '../person/person.service';
 
@@ -47,7 +47,7 @@ export class MeController {
   @Get('localisation')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  public async getPersonLocalisation(@Req() req: Request): Promise<PersonLocalisationDto> {
+  public async getPersonLocalisation(@Req() req: Request): Promise<SetPersonLocalisationDto> {
     const localisation = await this._personService.getLocalisation(req.user.idPerson);
     return new PersonLocalisationDto(localisation);
   }
