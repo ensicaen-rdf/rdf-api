@@ -96,6 +96,10 @@ export class PersonService {
     await this._personLocalisationRepository.save(localisation);
   }
 
+  public async getLocalisation(idPerson: string): Promise<PersonLocalisation> {
+    return await this._personLocalisationRepository.findOne({ where: { idPerson }, order: { date: 'DESC' } });
+  }
+
   public async addSteps(idPerson: string, numberOfSteps: number): Promise<void> {
     const previousTotalSteps = await this.getSteps(idPerson);
     const lastSteps = await this._personStepsRepository.findOne({ where: { idPerson }, order: { date: 'DESC' } });

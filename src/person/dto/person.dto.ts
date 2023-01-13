@@ -23,8 +23,9 @@ export class PersonDto {
   public bloodRhesus: string;
   public placeOfWork: string;
   public companyName: string;
+  public csse: number;
 
-  constructor(person: Person) {
+  constructor(person: Person, csse: number) {
     this.idPerson = person.idPerson;
     this.nationalId = person.nationalId;
     this.lastName = person.lastName;
@@ -46,5 +47,6 @@ export class PersonDto {
     this.bloodRhesus = person.bloodRhesus;
     this.placeOfWork = person.placeOfWork;
     this.companyName = person.companyName;
+    this.csse = csse;
   }
 }

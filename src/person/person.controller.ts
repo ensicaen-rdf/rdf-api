@@ -2,6 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { AddStepsDto } from './dto/add-steps.dto';
+import { PersonLocalisationDto } from './dto/person-localisation.dto';
 import { PersonDto } from './dto/person.dto';
 import { PersonService } from './person.service';
 
@@ -49,13 +50,19 @@ export class PersonController {
   @Get()
   public async getAll(): Promise<PersonDto[]> {
     const people = await this._personService.getAll();
-    return people.map((person) => new PersonDto(person));
+    const peopleDto = [];
+    for (const person of people) {
+      const csse = await this._personService.getCsse(person.idPerson);
+      peopleDto.push(new PersonDto(person, csse));
+    }
+    return peopleDto;
   }
 
   @Get(':idPerson')
   public async getPerson(@Param('idPerson') idPerson: string): Promise<PersonDto> {
     const person = await this._personService.getPerson(idPerson);
-    return new PersonDto(person);
+    const csse = await this._personService.getCsse(idPerson);
+    return new PersonDto(person, csse);
   }
 
   @Get(':idPerson/steps')
@@ -71,5 +78,16 @@ export class PersonController {
   @Get(':idPerson/csse')
   public async getPersonCSSE(@Param('idPerson') idPerson: string): Promise<number> {
     return await this._personService.getCsse(idPerson);
+  }
+
+  @Get(':idPerson/localisation')
+  public async getPersonLocalisation(@Param('idPerson') idPerson: string): Promise<PersonLocalisationDto> {
+    const localisation = await this._personService.getLocalisation(idPerson);
+    return new PersonLocalisationDto(localisation);
+  }
+
+  @Post(':idPerson/localisation')
+  public async setPersonLocalisation(@Param('idPerson') idPerson: string, @Body() localisation: PersonLocalisationDto): Promise<void> {
+    await this._personService.setLocalisation(idPerson, localisation.latitude, localisation.longitude);
   }
 }
