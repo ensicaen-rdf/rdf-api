@@ -16,9 +16,9 @@ export class PersonLocalisation {
   @Column()
   public date: Date;
 
-  @Column()
+  @Column('float')
   public latitude: number;
 
-  @Column()
+  @Column('float')
   public longitude: number;
 }

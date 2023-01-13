@@ -1,30 +1,31 @@
 # RDF API
 
-## Getting startd
+## Requirements
+
+- Node 16
+- Docker 20
+
+## Technologies
+
+- Nest JS
+- Postrgres
+
+## Getting started
+
+Install modules
 
 ```
 npm install
-npm run start:dev
 ```
 
-## Routes
+Start the database
 
-- POST /auth (art)
+```
+npm run docker:up
+```
 
-- GET /me 
-- POST /me/stats (number of steps)
+Start the development server
 
-- POST /camera/:idCamera/detect (person)
-- POST /camera/:idCamera
-
-- GET /report (ism)
-- POST /report (person, reason) (ism)
-
-- POST /person (name, infos, images)
-
-## Sockets
-
-- /me/stats (number of steps)
-
-- /stats/:idPerson
-- /stats
+```
+npm run start:dev
+```

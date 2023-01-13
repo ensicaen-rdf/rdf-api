@@ -32,22 +32,25 @@ export class ReportService {
   }
 
   public async validate(idReport: string, isValid: boolean, nbPoints: number) {
-    const rep = await this._reportRepository.findOneBy({ idReport: idReport });
-    rep.isValid = isValid;
-    rep.nbPoints = nbPoints;
+    const report = await this._reportRepository.findOneBy({ idReport: idReport });
+    report.isValid = isValid;
+    report.nbPoints = nbPoints;
 
     if (isValid) {
-      const person = await this._personRepository.findOneBy({ idPerson: rep.idPersonTarget });
+      const loose = new PersonCsse();
+      loose.idPerson = report.idPersonTarget;
+      loose.amount = -report.nbPoints;
 
-      const transaction = new PersonCsse();
-      transaction.idPerson = person.idPerson;
-      transaction.amount = -rep.nbPoints;
+      const win = new PersonCsse();
+      win.idPerson = report.idPersonFrom;
+      win.amount = 5;
 
-      this._csseRepository.save(transaction);
+      await this._csseRepository.save(loose);
+      await this._csseRepository.save(win);
     }
 
-    rep.isTreated = true;
-    this._reportRepository.save(rep);
+    report.isTreated = true;
+    await this._reportRepository.save(report);
   }
 
   public async findReportFrom(id: string): Promise<Report[]> {
