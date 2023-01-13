@@ -47,7 +47,7 @@ export class MeController {
   @Get('localisation')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  public async getPersonLocalisation(@Req() req: Request): Promise<SetPersonLocalisationDto> {
+  public async getPersonLocalisation(@Req() req: Request): Promise<PersonLocalisationDto> {
     const localisation = await this._personService.getLocalisation(req.user.idPerson);
     return new PersonLocalisationDto(localisation);
   }
@@ -55,7 +55,7 @@ export class MeController {
   @Post('localisation')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  public async setPersonLocalisation(@Req() req: Request, @Body() localisation: PersonLocalisationDto): Promise<void> {
+  public async setPersonLocalisation(@Req() req: Request, @Body() localisation: SetPersonLocalisationDto): Promise<void> {
     await this._personService.setLocalisation(req.user.idPerson, localisation.latitude, localisation.longitude);
   }
 }

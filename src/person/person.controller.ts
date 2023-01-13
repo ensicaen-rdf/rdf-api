@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { AddStepsDto } from './dto/add-steps.dto';
-import { PersonLocalisationDto } from './dto/person-localisation.dto';
+import { PersonLocalisationDto, SetPersonLocalisationDto } from './dto/person-localisation.dto';
 import { PersonDto } from './dto/person.dto';
 import { PersonService } from './person.service';
 
@@ -87,7 +87,7 @@ export class PersonController {
   }
 
   @Post(':idPerson/localisation')
-  public async setPersonLocalisation(@Param('idPerson') idPerson: string, @Body() localisation: PersonLocalisationDto): Promise<void> {
+  public async setPersonLocalisation(@Param('idPerson') idPerson: string, @Body() localisation: SetPersonLocalisationDto): Promise<void> {
     await this._personService.setLocalisation(idPerson, localisation.latitude, localisation.longitude);
   }
 }
