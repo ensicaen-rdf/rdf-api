@@ -18,4 +18,7 @@ export class PersonSteps {
 
   @Column()
   public amount: number;
+
+  @Column({ nullable: true })
+  public rawAmount: number;
 }

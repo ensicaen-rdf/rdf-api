@@ -106,9 +106,9 @@ export class PersonService {
 
     let amount = numberOfSteps;
     if (lastSteps) {
-      if (lastSteps.amount < amount) {
-        amount = amount - lastSteps.amount;
-      } else if (lastSteps.amount === amount) {
+      if (lastSteps.rawAmount < amount) {
+        amount = numberOfSteps - lastSteps.rawAmount;
+      } else if (lastSteps.rawAmount === numberOfSteps) {
         return;
       }
     }
@@ -117,6 +117,7 @@ export class PersonService {
     steps.idPerson = idPerson;
     steps.date = new Date();
     steps.amount = amount;
+    steps.rawAmount = numberOfSteps;
 
     await this._personStepsRepository.save(steps);
 
